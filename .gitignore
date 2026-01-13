@@ -2,3 +2,6 @@
 ./train.py
 train.py
 new_things.ipynb
+
+./__pycache__
+__pycache__
