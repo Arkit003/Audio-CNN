@@ -8,7 +8,7 @@ class ResidualBlock(nn.Module):
                               stride,padding=1,bias=False)#not adding bias as our batchnorm layer will gonna have it ,here it would be just waste of compute
         self.bn1= nn.BatchNorm2d(out_channels)
         self.conv2= nn.Conv2d(out_channels,out_channels,3,
-                              stride,padding=1,bias=False)  
+                              padding=1,bias=False)  
         self.bn2= nn.BatchNorm2d(out_channels)
         self.shortcut=nn.Sequential()
         self.use_shortcut= stride !=1 or in_channels != out_channels
@@ -44,10 +44,10 @@ class AudioCNN(nn.Module):
             )
         self.layer1=nn.ModuleList([ResidualBlock(64,64) for _ in range(3)])#module list doesn't have a forward behaviour
         
-        self.layer2=nn.ModuleList([ResidualBlock(64 if i==0 else 128, 128) for i in range(4)])
-        self.layer3=nn.ModuleList([ResidualBlock(128 if i==0 else 256, 256) for i in range(6)])
-        self.layer4=nn.ModuleList([ResidualBlock(256 if i==0 else 512, 512) for i in range(3)])
-        self.avgpool=nn.AdaptiveAvgPool2d((1,2))
+        self.layer2=nn.ModuleList([ResidualBlock(64 if i==0 else 128, 128,stride=2 if i==0 else 1) for i in range(4)])
+        self.layer3=nn.ModuleList([ResidualBlock(128 if i==0 else 256, 256,stride=2 if i==0 else 1) for i in range(6)])
+        self.layer4=nn.ModuleList([ResidualBlock(256 if i==0 else 512, 512,stride=2 if i==0 else 1) for i in range(3)])
+        self.avgpool=nn.AdaptiveAvgPool2d((1,1))
         self.dropout=nn.Dropout(0.5)
         self.fullyconnected=nn.Linear(512,num_classes)        
         
