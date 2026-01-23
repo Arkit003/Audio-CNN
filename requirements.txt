@@ -6,3 +6,7 @@ tqdm
 numpy
 tensorboard
 torchcodec
+fastapi
+librosa
+pydantic
+soundfile
