@@ -161,7 +161,7 @@ class AudioClassifier:
     
 @app.local_entrypoint()
 def main():
-    audio_data, sample_rate = sf.read("fl-mocking-birds-36124.mp3")
+    audio_data, sample_rate = sf.read("voice_clips/fl-mocking-birds-36124.mp3")
     buffer = io.BytesIO()#buffer lets audio as a file , without actually writing to a file(keeping it in ram)
     sf.write(buffer,audio_data,sample_rate,format="WAV")
     
@@ -172,7 +172,7 @@ def main():
     server = AudioClassifier() #modal object
     url = server.inference.get_web_url()#creates an modal endpoint in modal container https://arkit-audio-classifier.modal.run
 
-    response = requests.post(url,json=payload)
+    response = requests.post(str(url),json=payload)
     response.raise_for_status()
     
     result = response.json()
