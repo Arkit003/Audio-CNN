@@ -9,7 +9,7 @@ Audio classification project centered on a CNN pipeline for ESC-50 style environ
 - `main.py`: hosted inference endpoint that returns predictions + tensors for visualization
 - `cnn-visualizer/`: lightweight Next.js app to inspect inference outputs
 
-Frontend details: see `cnn-visualizer/README.md`.
+Frontend details: see [`cnn-visualizer/README.md`](cnn-visualizer/README.md).
 
 This repo is primarily about the **audio CNN workflow** (data -> spectrogram -> model -> class probabilities + intermediate activations), not frontend engineering.
 
