@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { env } from "~/env";
 import ColorScale from "~/components/ColorScale";
 import FeatureMap from "~/components/FeatureMap";
 import { Badge } from "~/components/ui/badge";
@@ -172,14 +173,11 @@ export default function HomePage() {
           ),
         );
 
-        const response = await fetch(
-          "https://arkit312005--audio-cnn-inference-audioclassifier-inference.modal.run",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ audio_data: base64String }),
-          },
-        );
+        const response = await fetch(env.NEXT_PUBLIC_INFERENCE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ audio_data: base64String }),
+        });
 
         if (!response.ok) {
           throw new Error(`API error ${response.statusText}`);
